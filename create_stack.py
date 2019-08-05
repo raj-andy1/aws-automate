@@ -3,20 +3,14 @@ import boto3
 import random
 
 stack_list = []
-num_stack = 50
-user_str = 'bak-dc'
-salt_flag = False
+num_stack = 1
+user_str = 'jira'
+salt_flag = True
 start_num = 0
 
 #boto params
-region_nm = 'us-west-2'
+region_nm = 'us-east-1'
 
-#CF params
-domain_nm = 'dc.summit19labs.com.'
-s3_url = 'https://s3-us-west-2.amazonaws.com/summit19-labs/dc/templates/dc-jira-dc.yaml'
-j_ver = '8.1.0'
-j_prod = 'Software'
-j_dl_url = 'https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.1.0-EAP02-x64.bin'
 
 for num in range(start_num,(num_stack+1)):
 	if salt_flag: # if flag is present, add the salt to the instance name string
@@ -42,16 +36,15 @@ while True:
 		for stack in stack_list:
 			response = client.create_stack(
 				StackName = stack,
-				TemplateURL=s3_url,
+				TemplateURL='https://atl-andyr-cloudformation.s3.amazonaws.com/qs/quickstart-jira-dc.template.yaml',
 				Parameters= [
-				{'ParameterKey':'JiraProduct','ParameterValue':j_prod,'UsePreviousValue':False},
-				{'ParameterKey':'JiraVersion','ParameterValue':j_ver,'UsePreviousValue':False},
-				{'ParameterKey':'DeployEnvironment','ParameterValue':'prod','UsePreviousValue':False},
-				{'ParameterKey':'ClusterNodeInstanceType','ParameterValue':'t3.large','UsePreviousValue':False},
-				{'ParameterKey':'ClusterNodeMax','ParameterValue':'2','UsePreviousValue':False},
-				{'ParameterKey':'ClusterNodeMin','ParameterValue':'2','UsePreviousValue':False},
+				{'ParameterKey':'JiraProduct','ParameterValue':'Software','UsePreviousValue':False},
+				{'ParameterKey':'JiraVersion','ParameterValue':'7.13.5','UsePreviousValue':False},
+				{'ParameterKey':'ClusterNodeInstanceType','ParameterValue':'c5.xlarge','UsePreviousValue':False},
+				{'ParameterKey':'ClusterNodeMax','ParameterValue':'1','UsePreviousValue':False},
+				{'ParameterKey':'ClusterNodeMin','ParameterValue':'1','UsePreviousValue':False},
 				{'ParameterKey':'ClusterNodeVolumeSize','ParameterValue':'50','UsePreviousValue':False},
-				{'ParameterKey':'DBInstanceClass','ParameterValue':'db.t2.medium','UsePreviousValue':False},
+				{'ParameterKey':'DBInstanceClass','ParameterValue':'db.m4.large','UsePreviousValue':False},
 				{'ParameterKey':'DBIops','ParameterValue':'1000','UsePreviousValue':False},
 				{'ParameterKey':'DBMasterUserPassword','ParameterValue':'Charlie101','UsePreviousValue':False},
 				{'ParameterKey':'DBMultiAZ','ParameterValue':'false','UsePreviousValue':False},
@@ -59,16 +52,16 @@ while True:
 				{'ParameterKey':'DBStorage','ParameterValue':'200','UsePreviousValue':False},
 				{'ParameterKey':'DBStorageEncrypted','ParameterValue':'false','UsePreviousValue':False},
 				{'ParameterKey':'DBStorageType','ParameterValue':'General Purpose (SSD)','UsePreviousValue':False},
-				{'ParameterKey':'AssociatePublicIpAddress','ParameterValue':'true','UsePreviousValue':False},
+				{'ParameterKey':'InternetFacingLoadBalancer','ParameterValue':'true','UsePreviousValue':False},
 				{'ParameterKey':'CidrBlock','ParameterValue':'0.0.0.0/0','UsePreviousValue':False},
 				{'ParameterKey':'KeyPairName','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'SSLCertificateARN','ParameterValue':'','UsePreviousValue':False},
+				{'ParameterKey':'SSLCertificateARN','ParameterValue':'arn:aws:acm:us-east-1:320820684358:certificate/0012c433-fc30-4859-b6f9-ab701f9ddd98','UsePreviousValue':False},
 				{'ParameterKey':'CustomDnsName','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'HostedZone','ParameterValue':domain_nm,'UsePreviousValue':False},
-				{'ParameterKey':'JiraDownloadUrl','ParameterValue':j_dl_url,'UsePreviousValue':False},
-				{'ParameterKey':'LocalAnsibleGitRepo','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'LocalAnsibleGitSshKeyName','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'StartCollectd','ParameterValue':'true','UsePreviousValue':False},
+				{'ParameterKey':'HostedZone','ParameterValue':'atlassian.studio.','UsePreviousValue':False},
+				{'ParameterKey':'DeploymentAutomationRepository','ParameterValue':'https://bitbucket.org/atlassian/dc-deployments-automation.git','UsePreviousValue':False},
+				{'ParameterKey':'DeploymentAutomationBranch','ParameterValue':'master','UsePreviousValue':False},
+				{'ParameterKey':'DeploymentAutomationPlaybook','ParameterValue':'aws_jira_dc_node.yml','UsePreviousValue':False},
+				{'ParameterKey':'DeploymentAutomationKeyName','ParameterValue':'','UsePreviousValue':False},
 				{'ParameterKey':'TomcatContextPath','ParameterValue':'','UsePreviousValue':False},
 				{'ParameterKey':'CatalinaOpts','ParameterValue':'','UsePreviousValue':False},
 				{'ParameterKey':'JvmHeapOverride','ParameterValue':'','UsePreviousValue':False},
@@ -77,10 +70,10 @@ while True:
 				{'ParameterKey':'DBMaxIdle','ParameterValue':'20','UsePreviousValue':False},
 				{'ParameterKey':'DBMaxWaitMillis','ParameterValue':'10000','UsePreviousValue':False},
 				{'ParameterKey':'DBMinEvictableIdleTimeMillis','ParameterValue':'18000','UsePreviousValue':False},
-				{'ParameterKey':'DBMinIdle','ParameterValue':'','UsePreviousValue':False},
+				{'ParameterKey':'DBMinIdle','ParameterValue':'10','UsePreviousValue':False},
 				{'ParameterKey':'DBRemoveAbandoned','ParameterValue':'true','UsePreviousValue':False},
 				{'ParameterKey':'DBRemoveAbandonedTimeout','ParameterValue':'60','UsePreviousValue':False},
-				{'ParameterKey':'DBTestOnBorrow','ParameterValue':'true','UsePreviousValue':False},
+				{'ParameterKey':'DBTestOnBorrow','ParameterValue':'false','UsePreviousValue':False},
 				{'ParameterKey':'DBTestWhileIdle','ParameterValue':'true','UsePreviousValue':False},
 				{'ParameterKey':'DBTimeBetweenEvictionRunsMillis','ParameterValue':'60000','UsePreviousValue':False},
 				{'ParameterKey':'MailEnabled','ParameterValue':'true','UsePreviousValue':False},
@@ -92,13 +85,13 @@ while True:
 				{'ParameterKey':'TomcatMinSpareThreads','ParameterValue':'10','UsePreviousValue':False},
 				{'ParameterKey':'TomcatProtocol','ParameterValue':'HTTP/1.1','UsePreviousValue':False},
 				{'ParameterKey':'TomcatRedirectPort','ParameterValue':'8443','UsePreviousValue':False},
-				{'ParameterKey':'TomcatScheme','ParameterValue':'http','UsePreviousValue':False},
+				{'ParameterKey':'TomcatScheme','ParameterValue':'https','UsePreviousValue':False},
 				],
     			OnFailure='ROLLBACK',
     		 	Capabilities=['CAPABILITY_IAM',],
     			Tags=[
-    			{'Key': 'resource_owner','Value': 'csa_team'},
-    			{'Key': 'Purpose','Value': 'dc_training_expo'},
+    			{'Key': 'resource_owner','Value': 'andyr'},
+    			{'Key': 'Purpose','Value': 'jira-testing'},
     			{'Key': 'business_unit','Value': 'FieldOps'},
     			{'Key':'Name','Value':stack},
     			],
