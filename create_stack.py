@@ -3,19 +3,19 @@ import boto3
 import random
 
 stack_list = []
-num_stack = 1
+num_stack = 61
 user_str = 'jira'
-salt_flag = True
-start_num = 0
+salt_flag = False
+start_num = 2
 
 #boto params
-region_nm = 'us-east-1'
+region_nm = 'eu-central-1'
 
 
 for num in range(start_num,(num_stack+1)):
 	if salt_flag: # if flag is present, add the salt to the instance name string
 		salt = random.randrange(10,500,3)
-		stack_name = user_str  + '-' + str(salt) + '-'
+		stack_name = user_str + '-' + str(salt) + '-'
 	else:
 		stack_name = user_str + '-'
 	stack_name = stack_name + str(num).zfill(3)
@@ -36,7 +36,7 @@ while True:
 		for stack in stack_list:
 			response = client.create_stack(
 				StackName = stack,
-				TemplateURL='https://atl-andyr-cloudformation.s3.amazonaws.com/qs/quickstart-jira-dc.template.yaml',
+				TemplateURL='https://open-hol-dc-on-aws.s3.eu-central-1.amazonaws.com/templates/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml',
 				Parameters= [
 				{'ParameterKey':'JiraProduct','ParameterValue':'Software','UsePreviousValue':False},
 				{'ParameterKey':'JiraVersion','ParameterValue':'7.13.5','UsePreviousValue':False},
@@ -55,9 +55,9 @@ while True:
 				{'ParameterKey':'InternetFacingLoadBalancer','ParameterValue':'true','UsePreviousValue':False},
 				{'ParameterKey':'CidrBlock','ParameterValue':'0.0.0.0/0','UsePreviousValue':False},
 				{'ParameterKey':'KeyPairName','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'SSLCertificateARN','ParameterValue':'arn:aws:acm:us-east-1:320820684358:certificate/0012c433-fc30-4859-b6f9-ab701f9ddd98','UsePreviousValue':False},
+				{'ParameterKey':'SSLCertificateARN','ParameterValue':'arn:aws:acm:eu-central-1:755021131661:certificate/424eb0f8-24bd-4a1c-96db-028eccab1bf9','UsePreviousValue':False},
 				{'ParameterKey':'CustomDnsName','ParameterValue':'','UsePreviousValue':False},
-				{'ParameterKey':'HostedZone','ParameterValue':'atlassian.studio.','UsePreviousValue':False},
+				{'ParameterKey':'HostedZone','ParameterValue':'open.atlassian.guru.','UsePreviousValue':False},
 				{'ParameterKey':'DeploymentAutomationRepository','ParameterValue':'https://bitbucket.org/atlassian/dc-deployments-automation.git','UsePreviousValue':False},
 				{'ParameterKey':'DeploymentAutomationBranch','ParameterValue':'master','UsePreviousValue':False},
 				{'ParameterKey':'DeploymentAutomationPlaybook','ParameterValue':'aws_jira_dc_node.yml','UsePreviousValue':False},
@@ -87,7 +87,7 @@ while True:
 				{'ParameterKey':'TomcatRedirectPort','ParameterValue':'8443','UsePreviousValue':False},
 				{'ParameterKey':'TomcatScheme','ParameterValue':'https','UsePreviousValue':False},
 				],
-    			OnFailure='ROLLBACK',
+    			OnFailure='DO_NOTHING',
     		 	Capabilities=['CAPABILITY_IAM',],
     			Tags=[
     			{'Key': 'resource_owner','Value': 'andyr'},
