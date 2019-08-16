@@ -79,8 +79,8 @@ while True:
 			try: 
 				response = client.create_stack(
 					StackName = stack,
-					TemplateURL = get_template_url()[0],
-					Parameters = get_template_url()[1],
+					TemplateURL = temp_url,
+					Parameters = stack_params,
     				OnFailure='DO_NOTHING',
     		 		Capabilities=['CAPABILITY_IAM',],
     				Tags=[
