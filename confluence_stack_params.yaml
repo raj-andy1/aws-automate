@@ -2,7 +2,7 @@
   ParameterValue: synchrony-local
   UsePreviousValue: false
 - ParameterKey: ConfluenceVersion
-  ParameterValue: 6.15.2
+  ParameterValue: 6.15.7
   UsePreviousValue: false
 - ParameterKey: ClusterNodeInstanceType
   ParameterValue: c5.xlarge
@@ -38,7 +38,7 @@
   ParameterValue: Charlie!01
   UsePreviousValue: false
 - ParameterKey: DBMultiAZ
-  ParameterValue: 'true'
+  ParameterValue: 'false'
   UsePreviousValue: false
 - ParameterKey: DBPassword
   ParameterValue: Charlie!01
@@ -62,13 +62,13 @@
   ParameterValue: ''
   UsePreviousValue: false
 - ParameterKey: SSLCertificateARN
-  ParameterValue: arn:aws:acm:eu-central-1:755021131661:certificate/424eb0f8-24bd-4a1c-96db-028eccab1b
+  ParameterValue: arn:aws:acm:eu-central-1:320820684358:certificate/38da7aca-b0f2-465e-ad2f-7f16c7a59732
   UsePreviousValue: false
 - ParameterKey: CustomDnsName
   ParameterValue: ''
   UsePreviousValue: false
 - ParameterKey: HostedZone
-  ParameterValue: open.atlassian.guru.
+  ParameterValue: atlassian.studio.
   UsePreviousValue: false
 - ParameterKey: SubDomainName
   ParameterValue: ''

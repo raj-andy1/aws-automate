@@ -50,13 +50,13 @@
   ParameterValue: ''
   UsePreviousValue: false
 - ParameterKey: SSLCertificateARN
-  ParameterValue: arn:aws:acm:eu-central-1:755021131661:certificate/424eb0f8-24bd-4a1c-96db-028eccab1bf9
+  ParameterValue:  arn:aws:acm:eu-central-1:320820684358:certificate/38da7aca-b0f2-465e-ad2f-7f16c7a59732
   UsePreviousValue: false
 - ParameterKey: CustomDnsName
   ParameterValue: ''
   UsePreviousValue: false
 - ParameterKey: HostedZone
-  ParameterValue: open.atlassian.guru.
+  ParameterValue: atlassian.studio.
   UsePreviousValue: false
 - ParameterKey: DeploymentAutomationRepository
   ParameterValue: https://bitbucket.org/atlassian/dc-deployments-automation.git

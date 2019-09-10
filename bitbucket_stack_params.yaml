@@ -1,5 +1,5 @@
 - ParameterKey: BitbucketVersion
-  ParameterValue: 6.3.1
+  ParameterValue: 6.5.1
   UsePreviousValue: false
 - ParameterKey: ClusterNodeInstanceType
   ParameterValue: c5.xlarge
@@ -32,7 +32,7 @@
   ParameterValue: Charlie101
   UsePreviousValue: false
 - ParameterKey: DBMultiAZ
-  ParameterValue: 'true'
+  ParameterValue: 'false'
   UsePreviousValue: false
 - ParameterKey: DBPassword
   ParameterValue: Charlie101
@@ -53,13 +53,13 @@
   ParameterValue: 'true'
   UsePreviousValue: false
 - ParameterKey: KeyPairName
-  ParameterValue: open-andyr-fra
+  ParameterValue: producthub-open
   UsePreviousValue: false
 - ParameterKey: CustomDnsName
-  ParameterValue: ''
+  ParameterValue: bbdc-2.atlassian.studio
   UsePreviousValue: false
 - ParameterKey: SSLCertificateARN
-  ParameterValue: ''
+  ParameterValue: arn:aws:acm:eu-central-1:320820684358:certificate/38da7aca-b0f2-465e-ad2f-7f16c7a59732
   UsePreviousValue: false
 - ParameterKey: BitbucketProperties
   ParameterValue: ''
