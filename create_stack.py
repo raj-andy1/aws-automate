@@ -35,9 +35,8 @@ stacks = {'jiradc11-latest-1':['https://aws-quickstart.s3.amazonaws.com/quicksta
 		'cnfdc44-er-4':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_er_params.yaml']}
 '''
 stacks = {
-		'cnfdc11-latest-1':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_latest_params.yaml'],
-		'cnfdc22-latest-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_latest_params.yaml'],
-		'cnfdc33-er-3':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_er_params.yaml'],
+		
+		'bbdc-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-bitbucket/templates/quickstart-bitbucket-dc.template.yaml','bitbucket_stack_params.yaml'],
 }
 
 client = boto3.client('cloudformation',region_name=region_nm)
@@ -83,6 +82,7 @@ while True:
 
 
 '''
+# old code to allow use of template type, parameter files...etc
 def get_template_url(template_type='jiradc'):
 	try:
 		template_type = sys.argv[1]
