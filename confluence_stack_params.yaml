@@ -62,7 +62,7 @@
   ParameterValue: ''
   UsePreviousValue: false
 - ParameterKey: SSLCertificateARN
-  ParameterValue: arn:aws:acm:eu-central-1:320820684358:certificate/38da7aca-b0f2-465e-ad2f-7f16c7a59732
+  ParameterValue: arn:aws:acm:ap-southeast-2:320820684358:certificate/be3532cb-58a1-488e-9e7e-2d2f61982df7
   UsePreviousValue: false
 - ParameterKey: CustomDnsName
   ParameterValue: ''

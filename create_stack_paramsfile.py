@@ -3,6 +3,8 @@
 '''
 Instructions to create multiple stacks of Jira, Confluence or Bitbucket DC
 1. Clone the repository aws-automate
+2. provide the stack name and the associated parameters file. all example parameter templates are in yaml and are located in the root directory.
+3. run 'python3 create_stack_paramsfile.py'
 
 
 8. Logon to the AWS console and check the stack creation process
@@ -13,31 +15,27 @@ import random
 import yaml
 import sys
 
-#parameters to create number of stacks
-stack_list = []
-num_stack = 2
-salt_flag = False
-start_num = 1
 
 #boto params
-region_nm = 'eu-central-1'
+region_nm = 'us-east-1'
 
 #stack parameters are loaded into a yaml file for easy readability and access
 
 '''
 stacks = {'jiradc11-latest-1':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_latest_params.yaml'],
 		'jiradc22-latest-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_latest_params.yaml'],
-		'jiradc33-er-1':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_er_params.yaml'],
-		'jiradc44-er-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_er_params.yaml'],
+		'jiradc33-er-3':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_er_params.yaml'],
+		'jiradc44-er-4':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-jira/templates/quickstart-jira-dc.template.yaml','jira_stack_er_params.yaml'],
 		'cnfdc11-latest-1':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_latest_params.yaml'],
 		'cnfdc22-latest-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_latest_params.yaml'],
 		'cnfdc33-er-3':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_er_params.yaml'],
-		'cnfdc44-er-4':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_er_params.yaml']}
+		'cnfdc44-er-4':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_er_params.yaml'],
+		'bbdc-1':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-bitbucket/templates/quickstart-bitbucket-dc.template.yaml','bbdc-1_params.yaml'],
+		'bbdc-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-bitbucket/templates/quickstart-bitbucket-dc.template.yaml','bbdc-2_params.yaml']
+		}
 '''
-stacks = {
-		
-		'bbdc-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-bitbucket/templates/quickstart-bitbucket-dc.template.yaml','bitbucket_stack_params.yaml'],
-}
+
+stacks = {'cnfdc22-latest-2':['https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-confluence/templates/quickstart-confluence-master.template.yaml','confluence_stack_latest_params.yaml']}
 
 client = boto3.client('cloudformation',region_name=region_nm)
 
@@ -77,5 +75,6 @@ while True:
 				else:
 					print (response)
 			except Exception as e:
+				print ('Error during creation of stack: %s' % stack)
 				print (e)
 		exit()
