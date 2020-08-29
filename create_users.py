@@ -4,10 +4,10 @@ import boto3
 import random
 
 #Parameters
-num_users = 200 #provide the number of users
+num_users = 10 #provide the number of users
 user_list = []
 group_nm = 'og' #provide name of the group
-passwd='AtlassianSummit19L@b' #provide the password
+passwd='AtlassianSummit20L@b' #provide the password
 salt_flag = False # Flag to set a random salt number to be added to the user name string to counter for aws delete user time lags
 
 
@@ -24,19 +24,31 @@ print ('List of users to be added is ', user_list)
 
 iam = boto3.client('iam')
 
+try:
+	for groupname in [i["GroupName"] for i in list(iam.list_groups().values())[0]]:
+		if groupname != group_nm:
+			iam.create_group(GroupName=group_nm)
+except Exception as e:
+	print("Group already present, Skipping...")
+	pass
 
-while True:
-	response = input('Press "P" to proceed or "C" to cancel:')
-	if response == '' or response == 'C' or response == 'c':
-		print ('Cancelling!!')
-		break
-	elif response == 'P' or response == 'p':
-		print ('Creating users')
-		for user_nm in user_list:
-			user = iam.create_user(UserName=user_nm)
-			group = iam.add_user_to_group(GroupName=group_nm,UserName=user_nm)
-			iam.create_login_profile(UserName=user_nm,Password=passwd,PasswordResetRequired=False)
-			print ('Created User: %s' % user['User']['UserName'])
-			if group['ResponseMetadata']['HTTPStatusCode'] == 200:
-				print ('User: %s has been added to group: %s' % (user['User']['UserName'],group_nm))
-		exit()
+	
+try: 
+	while True:
+		response = input('Press "P" to proceed or "C" to cancel:')
+		if response == '' or response == 'C' or response == 'c':
+			print ('Cancelling!!')
+			break
+		elif response == 'P' or response == 'p':
+			print ('Creating users')
+			for user_nm in user_list:
+				user = iam.create_user(UserName=user_nm)
+				group = iam.add_user_to_group(GroupName=group_nm,UserName=user_nm)
+				iam.create_login_profile(UserName=user_nm,Password=passwd,PasswordResetRequired=False)
+				print ('Created User: %s' % user['User']['UserName'])
+				if group['ResponseMetadata']['HTTPStatusCode'] == 200:
+					print ('User: %s has been added to group: %s' % (user['User']['UserName'],group_nm))
+			exit()
+except Exception as e:
+	print("Users already present, Skipping....")
+	pass
