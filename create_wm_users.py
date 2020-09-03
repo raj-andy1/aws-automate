@@ -30,42 +30,36 @@ for org in org_list:
 	#print (domain)
 	for usr in org['users']:
 		print (usr)
+		ent_id = ''
 		try:
 			u = iam.create_user(OrganizationId=org['org_id'], Name=usr, DisplayName=usr, Password=passwd)
-			print (u)
-			ent_id = u['UserId']
 		except botocore.exceptions.ClientError as err:
 			#print (err.response)
 			#print (err.response['Error']['Code'])
 			if err.response['Error']['Code'] == 'NameAvailabilityException':
 				print ('user name already exists')
+				n = iam.list_users(OrganizationId=org['org_id'], MaxResults=15)
+				for usr in n['Users']:
+					uid = usr['Id']
+					uname = usr['Name']
+					state = usr['State']
+					if (uname == 'admin' and state == 'ENABLED'):
+						ent_id = uid
+				print (ent_id)
 			else:
 				print (err.response['Error'])
 				exit()
 		finally:
 			email = usr + '@' + org['domain_nm']
 			print (email)
-			try:
-				r = iam.register_to_work_mail(OrganizationId=org['org_id'], EntityId=ent_id, Email=email)
-				if r['ResponseMetadata']['HTTPStatusCode'] == 200:
-					print ('Registered WorkMail User: %s with Email Id: %s' % (usr,email))
-					exit()
-			except botocore.exceptions.ClientError as err:
-				print (err.response['Error'])
-				exit()
-	
-	'''				
-		if u['ResponseMetadata']['HTTPStatusCode'] == 200:
-			print ('Created WorkMail User: %s' % usr)
-			ent_id = u['UserId']
-			email = usr + '@' + org['domain_nm']
-			print (email)
-			try:
-				r = iam.register_to_work_mail(OrganizationId=org['org_id'], EntityId=ent_id, Email=email)
-				if r['ResponseMetadata']['HTTPStatusCode'] == 200:
-					print ('Registered WorkMail User: %s with Email Id: %s' % (usr,email))
-					exit()
-			except botocore.exceptions.ClientError as err:
-				print (err.response['Error'])
-				exit()	
-'''		
+			if ent_id != '':
+				try:
+					r = iam.register_to_work_mail(OrganizationId=org['org_id'], EntityId=ent_id, Email=email)
+					if r['ResponseMetadata']['HTTPStatusCode'] == 200:
+						print ('Registered WorkMail User: %s with Email Id: %s' % (usr,email))
+						exit()
+				except botocore.exceptions.ClientError as err:
+					print (err.response['Error'])
+					exit()	
+
+
