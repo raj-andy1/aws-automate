@@ -1,10 +1,11 @@
 {
     "Version": "2012-10-17",
-    "Statement": [{
-        "Sid": "DenyVPCIAMServices",
-        "Effect": "Allow",
-        "NotAction": [
-        	"ec2:CreateDhcpOptions",
+    "Statement": [
+        {
+            "Sid": "DenyVPCIAMServices",
+            "Effect": "Allow",
+            "NotAction": [
+                "ec2:CreateDhcpOptions",
                 "ec2:ReplaceRouteTableAssociation",
                 "ec2:DeleteClientVpnEndpoint",
                 "ec2:DeleteVpcEndpoints",
@@ -129,17 +130,21 @@
                 "ec2:DeleteVpnConnectionRoute",
                 "ec2:CreateVpcEndpoint",
                 "ec2:EnableVpcClassicLinkDnsSupport",
-                "ec2:CreateNetworkAclEntry"
-                "iam:*"]
-        "Resource": "*",
-        "Condition": {
+                "ec2:CreateNetworkAclEntry",
+                "iam:*"
+            ],
+            "Resource": "*",
+            "Condition": {
                 "ForAnyValue:StringEquals": {
                     "aws:RequestedRegion": [
+                        "us-east-1",
+                        "ap-southeast-1",
                         "us-east-2",
                         "eu-central-1",
-                        "ap-southeast-1",
                         "us-west-2"
                     ]
                 }
-    }
+            }
+        }
+    ]
 }
