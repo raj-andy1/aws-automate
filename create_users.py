@@ -6,7 +6,7 @@ import random
 #Parameters
 num_users = 10 #provide the number of users
 user_list = []
-group_nm = 'og' #provide name of the group
+group_nm = 'jiraevent' #provide name of the group
 passwd='AtlassianSummit20L@b' #provide the password
 salt_flag = False # Flag to set a random salt number to be added to the user name string to counter for aws delete user time lags
 
@@ -14,9 +14,9 @@ salt_flag = False # Flag to set a random salt number to be added to the user nam
 for num in range(1,(num_users+1)):
 	if salt_flag: # if flag is present, add the salt to the username string, else do not add
 		salt = random.randrange(10,500,3)
-		user_name = group_nm  + '-' + str(salt) + '-user-'
+		user_name = str(salt) + 'user-'
 	else:
-		user_name = group_nm +'-user-'
+		user_name = 'user-'
 	user_name = user_name + str(num).zfill(3)
 	user_list.append(user_name)
 
@@ -26,21 +26,22 @@ iam = boto3.client('iam')
 
 try:
 	for groupname in [i["GroupName"] for i in list(iam.list_groups().values())[0]]:
-		if groupname != group_nm:
-			iam.create_group(GroupName=group_nm)
+		if group_nm not in groupname:
+			break
+		else:
+			pass
+	iam.create_group(GroupName=group_nm)
 except Exception as e:
-	print("Group already present, Skipping...")
+	print("Group present")
 	pass
 
-	
-try: 
+try:
 	while True:
 		response = input('Press "P" to proceed or "C" to cancel:')
 		if response == '' or response == 'C' or response == 'c':
 			print ('Cancelling!!')
 			break
 		elif response == 'P' or response == 'p':
-			print ('Creating users')
 			for user_nm in user_list:
 				user = iam.create_user(UserName=user_nm)
 				group = iam.add_user_to_group(GroupName=group_nm,UserName=user_nm)
@@ -49,6 +50,6 @@ try:
 				if group['ResponseMetadata']['HTTPStatusCode'] == 200:
 					print ('User: %s has been added to group: %s' % (user['User']['UserName'],group_nm))
 			exit()
-except Exception as e:
-	print("Users already present, Skipping....")
+except iam.exceptions.EntityAlreadyExistsException:
+	print ('Users present')
 	pass
