@@ -5,17 +5,17 @@ import random
 
 num_users = 100 #provide the number of users
 user_list = []
-group_n = 'j8'
-group_nm = 'j8' #provide name of the group
+group_n = 'jiraevent'
+group_nm = '' #provide name of the group
 salt_flag = False # Flag to set a random salt number to be added to the user name string to counter for aws delete user time lags
 
 
-for num in range(1,(num_users+1)):
+for num in range(39,(num_users+1)):
 	if salt_flag: # if flag is present, add the salt to the username string, else do not add
 		salt = random.randrange(10,500,3)
 		user_name = group_nm  + '-' + str(salt) + '-user-'
 	else:
-		user_name = group_nm +'-user-'
+		user_name = group_nm +'user-'
 	user_name = user_name + str(num).zfill(3)
 	user_list.append(user_name)
 
@@ -45,3 +45,4 @@ while True:
 				print ('Deleted User: %s' % user_nm)
 			#print (user)
 	exit()
+

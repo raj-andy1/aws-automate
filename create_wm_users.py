@@ -10,8 +10,8 @@ import botocore.exceptions
 user_list = ['admin','agrant','cowens','wsmith','jevans','mtaylor','kcampbell','eparis','rlee','hjennings','mdavis','rbaker']
 passwd='AtlassianC0mp@ny' #provide the password
 region_nm = 'us-west-2'
-org_list = [{'org_id' : 'm-5d1189f97c3a4dec8b0beebda1f0f41d', 'domain_nm' : 'user-001.charlieoil.com', 'users':user_list},
-{'org_id' : 'm-d4c045db4b57494cad152d007cbc0e15', 'domain_nm' : 'user-002.charlieoil.com', 'users': user_list},
+org_list = [{'org_id' : 'm-fd99bb187cb242e6bb2c7bd5c1b0f2a4', 'domain_nm' : 'user-005.atlassian.camp', 'users':user_list}]
+'''{'org_id' : 'm-d4c045db4b57494cad152d007cbc0e15', 'domain_nm' : 'user-002.charlieoil.com', 'users': user_list},
 {'org_id' : 'm-fb4ebffeb93347478d0ce290b15018e6', 'domain_nm' : 'user-003.charlieoil.com', 'users':user_list},
 {'org_id' : 'm-1d820e9f64a4485ebbf6431a0e93e26c', 'domain_nm' : 'user-004.charlieoil.com', 'users':user_list},
 {'org_id' : 'm-a9be2aba28204cbe9a0945c6ed37132d', 'domain_nm' : 'user-005.charlieoil.com', 'users':user_list},
@@ -19,7 +19,7 @@ org_list = [{'org_id' : 'm-5d1189f97c3a4dec8b0beebda1f0f41d', 'domain_nm' : 'use
 {'org_id' : 'm-44ae0237ca4140c78bae4bb72da84a9e', 'domain_nm' : 'user-007.charlieoil.com', 'users':user_list},
 {'org_id' : 'm-8488399331b844768a184d7dc24c577a', 'domain_nm' : 'user-008.charlieoil.com', 'users':user_list},
 {'org_id' : 'm-0e11c6bdb17e4175980c0db9c631749a', 'domain_nm' : 'user-009.charlieoil.com', 'users':user_list},
-{'org_id' : 'm-9e5065e8d58945db978e6101abca3603', 'domain_nm' : 'user-010.charlieoil.com', 'users':user_list}]
+{'org_id' : 'm-9e5065e8d58945db978e6101abca3603', 'domain_nm' : 'user-010.charlieoil.com', 'users':user_list}]'''
 
 
 iam = boto3.client('workmail',region_name=region_nm) #provide region name since cloudtoken needs defaults to us-east-1
