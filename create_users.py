@@ -4,14 +4,14 @@ import boto3
 import random
 
 #Parameters
-num_users = 10 #provide the number of users
+num_users = 110 #provide the number of users
 user_list = []
 group_nm = 'jiraevent' #provide name of the group
 passwd='AtlassianSummit20L@b' #provide the password
 salt_flag = False # Flag to set a random salt number to be added to the user name string to counter for aws delete user time lags
 
 
-for num in range(1,(num_users+1)):
+for num in range(51,(num_users+1)):
 	if salt_flag: # if flag is present, add the salt to the username string, else do not add
 		salt = random.randrange(10,500,3)
 		user_name = str(salt) + 'user-'
